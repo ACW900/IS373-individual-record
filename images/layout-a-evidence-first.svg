@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" width="640" height="520" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
+  <title>Layout A: evidence-first portfolio homepage wireframe</title>
+  <!-- page -->
+  <rect x="0" y="0" width="640" height="520" rx="14" fill="#f6f7f9"/>
+  <rect x="20" y="20" width="600" height="480" rx="10" fill="#ffffff" stroke="#c9ced6"/>
+  <!-- browser bar -->
+  <rect x="20" y="20" width="600" height="28" rx="10" fill="#eceff3"/>
+  <rect x="20" y="38" width="600" height="10" fill="#eceff3"/>
+  <circle cx="38" cy="34" r="4.5" fill="#e06c6c"/><circle cx="52" cy="34" r="4.5" fill="#e5b94e"/><circle cx="66" cy="34" r="4.5" fill="#6cc070"/>
+  <rect x="90" y="27" width="300" height="14" rx="7" fill="#ffffff" stroke="#d6dae0"/>
+  <text x="100" y="38" font-size="9" fill="#6b7280">acw33firstliveproj.online</text>
+
+  <!-- nav -->
+  <text x="44" y="78" font-size="15" font-weight="700" fill="#1f2937">Alex Wiemer</text>
+  <g font-size="10" fill="#4b5563">
+    <text x="420" y="77">Projects</text><text x="470" y="77">About</text><text x="510" y="77">Resume</text><text x="558" y="77">Contact</text>
+  </g>
+  <line x1="40" y1="92" x2="600" y2="92" stroke="#e5e7eb"/>
+
+  <!-- hero -->
+  <text x="44" y="126" font-size="20" font-weight="700" fill="#111827">I build apps people use,</text>
+  <text x="44" y="151" font-size="20" font-weight="700" fill="#111827">and ship them with automated pipelines.</text>
+  <text x="44" y="174" font-size="11" fill="#6b7280">NJIT IT student · seeking Summer 2027 AI automation / DevOps internships</text>
+  <rect x="44" y="186" width="74" height="24" rx="5" fill="#1f6feb"/><text x="58" y="202" font-size="10" fill="#fff" font-weight="600">View work ↓</text>
+  <rect x="126" y="186" width="64" height="24" rx="5" fill="#fff" stroke="#1f6feb"/><text x="142" y="202" font-size="10" fill="#1f6feb" font-weight="600">GitHub</text>
+  <rect x="198" y="186" width="70" height="24" rx="5" fill="#fff" stroke="#1f6feb"/><text x="212" y="202" font-size="10" fill="#1f6feb" font-weight="600">LinkedIn</text>
+
+  <!-- section label -->
+  <text x="44" y="240" font-size="11" font-weight="700" fill="#374151" letter-spacing="1">FEATURED PROJECTS</text>
+
+  <!-- cards -->
+  <g>
+    <rect x="44" y="252" width="172" height="176" rx="8" fill="#ffffff" stroke="#c9ced6"/>
+    <rect x="44" y="252" width="172" height="58" rx="8" fill="#e8f0fe"/><rect x="44" y="300" width="172" height="10" fill="#e8f0fe"/>
+    <text x="56" y="286" font-size="12" font-weight="700" fill="#1e3a8a">Save Point RAG</text>
+    <text x="56" y="330" font-size="9.5" fill="#374151">For: returning players</text>
+    <text x="56" y="345" font-size="9.5" fill="#374151">Ships via: CI/CD → HTTPS</text>
+    <rect x="56" y="356" width="120" height="6" rx="3" fill="#e5e7eb"/><rect x="56" y="368" width="96" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="56" y="392" width="60" height="22" rx="4" fill="#1f6feb"/><text x="68" y="407" font-size="9.5" fill="#fff">Live demo</text>
+    <rect x="122" y="392" width="80" height="22" rx="4" fill="#fff" stroke="#9ca3af"/><text x="132" y="407" font-size="9.5" fill="#374151">How it works</text>
+  </g>
+  <g>
+    <rect x="234" y="252" width="172" height="176" rx="8" fill="#ffffff" stroke="#c9ced6"/>
+    <rect x="234" y="252" width="172" height="58" rx="8" fill="#e7f6ec"/><rect x="234" y="300" width="172" height="10" fill="#e7f6ec"/>
+    <text x="246" y="286" font-size="12" font-weight="700" fill="#14532d">CI/CD Pipeline</text>
+    <text x="246" y="330" font-size="9.5" fill="#374151">For: teams shipping safely</text>
+    <text x="246" y="345" font-size="9.5" fill="#374151">Ships via: QA → prod, rollback</text>
+    <rect x="246" y="356" width="120" height="6" rx="3" fill="#e5e7eb"/><rect x="246" y="368" width="96" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="246" y="392" width="60" height="22" rx="4" fill="#1f6feb"/><text x="258" y="407" font-size="9.5" fill="#fff">Live site</text>
+    <rect x="312" y="392" width="80" height="22" rx="4" fill="#fff" stroke="#9ca3af"/><text x="322" y="407" font-size="9.5" fill="#374151">How it works</text>
+  </g>
+  <g>
+    <rect x="424" y="252" width="172" height="176" rx="8" fill="#ffffff" stroke="#c9ced6"/>
+    <rect x="424" y="252" width="172" height="58" rx="8" fill="#fdf2e3"/><rect x="424" y="300" width="172" height="10" fill="#fdf2e3"/>
+    <text x="436" y="286" font-size="12" font-weight="700" fill="#7c2d12">GameAtlas</text>
+    <text x="436" y="330" font-size="9.5" fill="#374151">For: deal-hunting gamers</text>
+    <text x="436" y="345" font-size="9.5" fill="#374151">Ships via: 3 Linux VMs</text>
+    <rect x="436" y="356" width="120" height="6" rx="3" fill="#e5e7eb"/><rect x="436" y="368" width="96" height="6" rx="3" fill="#e5e7eb"/>
+    <rect x="436" y="392" width="60" height="22" rx="4" fill="#fff" stroke="#9ca3af"/><text x="452" y="407" font-size="9.5" fill="#374151">Code</text>
+    <rect x="502" y="392" width="80" height="22" rx="4" fill="#fff" stroke="#9ca3af"/><text x="512" y="407" font-size="9.5" fill="#374151">How it works</text>
+  </g>
+
+  <!-- footer -->
+  <line x1="40" y1="448" x2="600" y2="448" stroke="#e5e7eb"/>
+  <text x="44" y="472" font-size="10" fill="#6b7280">About me  ·  Group project (my contribution)  ·  Contact  ·  Resume (PDF)</text>
+  <text x="596" y="490" font-size="9" fill="#9ca3af" text-anchor="end">Layout A · evidence-first</text>
+</svg>
