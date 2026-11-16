@@ -253,16 +253,16 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 
 | Item | Where | Status |
 |---|---|---|
-| Research question + reader | [A](#a-reader-and-question) | planned |
-| Technical sources + dates checked | [B](#b-technical-sources) | planned |
-| Vector / graph / keyword comparison | [C](#c-comparing-approaches) | planned |
-| Architecture choice | [D](#d-chosen-architecture) | planned |
-| Source manifest | [E](#e-source-manifest) | planned |
+| Research question + reader | [A](#a-reader-and-question) | written |
+| Technical sources + dates checked | [B](#b-technical-sources) | listed; reading in progress |
+| Vector / graph / keyword comparison | [C](#c-comparing-approaches) | written |
+| Architecture choice | [D](#d-chosen-architecture) | chosen (provisional) |
+| Source manifest | [E](#e-source-manifest) | 5 sources collected; permission not yet confirmed |
 | Sample representation (source → chunk → answer trace) | [F](#f-one-source-traced-through-the-system) | planned (illustrative, not executed) |
-| Evaluation questions | [G](#g-evaluation-questions) | planned |
+| Evaluation questions | [G](#g-evaluation-questions) | written; expected sources recorded; not run |
 | Stories / checks | [H](#h-observable-stories-and-checks) | planned |
 | Hosting, cost and limits | [I](#i-hosting-cost-and-limits) | planned |
-| Changed / checked / next | [J](#j-changed--checked--next) | — |
+| Changed / checked / next | [J](#j-changed--checked--next) | peer walkthrough pending |
 
 **Status labels I'll use:** `planned` · `observed locally` · `observed in CI` · `observed hosted`. A sketch or expected answer is **not** an executed result.
 
@@ -274,18 +274,20 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 
 **Why this fits:** Save Point's promise is *"New patch? Get caught up from the last time you played."* My App Studio SPEC records that the app has no real news source yet. RAG over official patch notes fills that gap.
 
+**Game:** **Deadlock** (Valve, on Steam). Valve ships frequent balance updates that change specific heroes, abilities and items, which makes "what changed since I last played?" a real question.
+
 **One-sentence goal:**
-> Save Point helps **a returning player of [GAME]** answer **"what changed since I last played?"** questions using **[about 5] official [GAME] patch notes**.
+> Save Point helps **a returning Deadlock player** answer **"what changed since I last played?"** questions using **5 official Deadlock patch notes**.
 
-**Reader:** a player who stopped for a few weeks or months and wants to know what changed for the characters, weapons, items or modes they care about, without reading every patch note.
+**Reader:** a Deadlock player who stopped for a few weeks or months and wants to know what changed for the heroes, abilities and items they use, without reading every patch note.
 
-**Research question:** For short, versioned patch notes, does vector retrieval find the right changes for plain-language questions better than a keyword baseline? What would a graph (patch → changed thing → type of change) add for relationship questions?
+**Research question:** For short, versioned patch notes, does vector retrieval find the right changes for plain-language questions better than a keyword baseline? What would a graph (patch → ability → hero) add for questions that span several patches?
 
 ---
 
 ### B. Technical sources
 
-*Read each one yourself and fill in the date. Only write down claims you actually saw in the source.*
+*Only claims I actually saw in each source go here. Dates are filled in as I read them.*
 
 | # | Source | What I'm using it for | Date checked | What I learned (my words) |
 |---|---|---|---|---|
@@ -298,22 +300,22 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 | T7 | Course chunking handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/chunking.md | Chunking experiment design | [date] | [ ] |
 | T8 | Course embeddings handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/embeddings.md | What embeddings are and aren't | [date] | [ ] |
 | T9 | Course AI cost comparison: https://github.com/kaw393939/is373-rag/blob/main/docs/students/ai-costs.md | Choosing an embedding + generation provider | [date] | [ ] |
-| T10 | [Docs for the embedding/generation provider you pick] | Model names, limits, pricing | [date] | [ ] |
+| T10 | Docs for the embedding/generation provider I pick | Model names, limits, pricing | to choose before Build | — |
 
-**AI help:** [Say where AI helped, e.g. "Claude helped draft this plan structure; I chose the topic, checked each source and made the decisions below."]
+**AI help:** Claude (an AI assistant) drafted this plan's structure, suggested using Save Point with patch notes, and pulled the five official Deadlock patch notes from Steam's news feed. I chose Deadlock, I'm reading the technical sources myself, and I made the architecture choice below. AI-written explanations are checked against T1–T9 before I rely on them.
 
 ---
 
 ### C. Comparing approaches
 
-| Approach | How it would work for patch notes | Good for | Weak for | Example question |
+| Approach | How it would work for Deadlock patch notes | Good for | Weak for | Example question |
 |---|---|---|---|---|
-| **Keyword baseline** (SQLite FTS5) | Match words in the question against patch-note text | Exact names and codes ("[CHARACTER]", "v[X.Y]") | Different wording ("got weaker" vs "damage reduced from 40 to 35") | "What changed for [CHARACTER] in [VERSION]?" |
-| **Vector** (embeddings) | Embed each chunk; find chunks closest in meaning to the question | Paraphrases and casual player language | Similar ≠ correct; can mix up versions without metadata | "Did they nerf [WEAPON]?" |
-| **Graph** | Nodes: Patch, Character/Weapon/Item, Mode. Edges: `CHANGED_IN`, `BUFFED`, `NERFED`, `ADDED`, `REMOVED`, each linked to the supporting passage | "Which patches changed X?", "What did patch Y change for Z?" | Relationships have to be extracted correctly; wrong or missing edges give wrong answers; more work | "Which patches since [VERSION] changed [CHARACTER]?" |
-| **Hybrid** | Vector to find passages + metadata or graph to filter by patch/entity | Mixed questions | More moving parts; has to prove it's worth it | — |
+| **Keyword baseline** (SQLite FTS5) | Match words in the question against patch-note text | Exact names ("Sinclair", "Rule, Ratannia!", "10-05-2026") | Different wording: notes say "damage reduced from 165 to 140", players ask "did they nerf it?" | "What changed for Sinclair in the 10-05-2026 update?" |
+| **Vector** (embeddings) | Embed each chunk; find chunks closest in meaning to the question | Casual player language and paraphrases | Similar ≠ correct; can mix up patches or heroes with similar changes without metadata | "Did they make Celeste's Shining Wonder weaker?" |
+| **Graph** | Nodes: `Patch`, `Hero`, `Ability`, `Item`. Edges: `(Patch)-[CHANGED]->(Ability)`, `(Ability)-[BELONGS_TO]->(Hero)`, `(Patch)-[CHANGED]->(Item)`, each linked to its supporting bullet | "Which patches changed Baba's Brew?", following one ability across patches in order | Edges have to be extracted correctly; missing or wrong edges give wrong answers; more work | "How has Baba's Brew changed across patches?" |
+| **Hybrid** | Vector search to find passages + metadata (or a graph) to filter by patch date and hero | Mixed questions | More moving parts; has to prove it's worth it | — |
 
-**What a graph would add:** patch notes are naturally about *things that changed in a version*, so "which patches touched X" is a relationship question. I can get most of that with **metadata** on vector chunks (patch version, date, entity names) without running a separate graph database.
+**What a graph would add:** Deadlock notes are lists of "hero: ability: old value → new value." Following one ability across patches (Baba's Brew cooldown went 25s → 27s → 28s) is a relationship question. I can get most of that with **metadata** on each chunk (patch date, hero, abilities) without running a separate graph database.
 
 ---
 
@@ -322,55 +324,56 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 **Choice (provisional): vector-first, with metadata, inside SQLite, compared against an FTS5 keyword baseline.** Graph is researched and documented but not built unless a check shows metadata isn't enough.
 
 **Why:**
-1. Most player questions are casual paraphrases ("is X still broken?"), and vector search is built for that.
-2. Version/date/entity **metadata filters** cover the main relationship question ("since version X") without a graph database.
+1. Most player questions are casual paraphrases ("did Celeste get nerfed?"), and vector search is built for that.
+2. Patch date + hero **metadata filters** cover the main relationship questions ("since early October", "which patches changed Baba") without a graph database.
 3. Save Point already uses **SQLite**. sqlite-vec + FTS5 keep everything in one persistent file, with **no new database server** on my droplet.
-4. Small corpus (about 5 docs), so a dedicated vector DB like Qdrant would be overkill. *(Alternative if sqlite-vec doesn't work on my setup: Qdrant in Docker, kept private on the `web` network.)*
+4. Small corpus (5 short patch notes), so a dedicated vector DB like Qdrant would be overkill. *(Alternative if sqlite-vec doesn't work on my setup: Qdrant in Docker, kept private on the Docker network.)*
 
 **Backup plan if time runs short:** keyword baseline + vector only, no metadata filters, with the graph comparison documented in research only.
 
-**What could change my mind (next experiment):** if the "which patches changed X" question fails with metadata filters, try a small graph of (Patch)-[CHANGED]->(Entity) edges and compare.
+**What could change my mind (next experiment):** if Q3 (Baba's Brew across patches) fails with metadata filters, try a small graph of `(Patch)-[CHANGED]->(Ability)` edges and compare.
+
+**Build location:** the existing Save Point repo, as features RAG-001 (import) → RAG-002 (retrieve) → RAG-003 (answer) → RAG-004 (deploy), each with its own issue, branch and PR. The graded App Studio version gets tagged first.
 
 **Planned flow:**
 ```text
 official patch note (S01–S05)
-  → import (admin only, uses existing APP-003 roles) → clean text, keep headings
-  → chunk by heading/bullet section, keep source ID + version + section
-  → embed chunks (model: [EMBEDDING MODEL], version recorded)
+  → import (admin only, uses existing APP-003 roles) → clean text
+  → chunk: one chunk per hero (or item group) per patch, keep source ID + patch date + hero + abilities
+  → embed chunks (embedding model chosen before Build, version recorded)
   → store in SQLite: chunks table + FTS5 index + sqlite-vec index (persistent)
-  → user question → embed with the SAME model → top-k chunks (+ version filter)
+  → user question → embed with the SAME model → top-4 chunks (+ optional date/hero filter)
   → show retrieved chunk IDs first
-  → send question + retrieved chunks to [GENERATION MODEL / PROVIDER]
-  → answer with links to source + section, or "I don't have patch notes covering that"
+  → send question + retrieved chunks to the generation model
+  → answer with links to the patch note, or "I don't have patch notes covering that"
 ```
 
-**Chunking experiment (planned):** compare **(a) one chunk per heading/bullet section** with **(b) a fixed [N] characters with [M] overlap** on one patch note. Record which one splits a single change across two chunks, and the effect on questions Q1–Q3.
+**Chunking experiment (planned):** compare **(a) one chunk per hero per patch** (Deadlock notes start each line with the hero or item name, so this is a natural boundary) with **(b) fixed 500-character chunks with 100 characters of overlap**. Record whether (b) splits one hero's changes across chunks or mixes two heroes, and the effect on Q1–Q4.
 
-**Models (to confirm before Build):**
+**Models (to choose before Build):**
 
 | Role | Option A | Option B | Decision |
 |---|---|---|---|
-| Embeddings | Hosted API embedding model ([name]) | Small local model on the droplet ([name]); watch RAM | [ ] |
-| Generation | [Provider] free tier | [Provider] paid with a spending cap | [ ] |
+| Embeddings | Hosted embedding API | Small local embedding model on the droplet (watch RAM) | before Build, after reading T8 + T9 |
+| Generation | A provider's free tier | A paid provider with a spending cap | before Build, after reading T9 |
 
 ---
 
 ### E. Source manifest
 
-**Option 1 (preferred): real official patch notes for [GAME].**
-**Option 2 (fallback): about 5 synthetic patch notes for a made-up game, clearly labeled synthetic.** This has no permission issues.
+All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam News feed for Deadlock (app 1422450). They're also posted in the official changelog forum (https://forums.playdeadlock.com/forums/changelog.10/). Local copies are saved privately for import; they're not republished in this repo.
 
-| ID | Title / version | Original URL | Publisher | Date / version | Permission note | Questions it should answer |
+| ID | Title | Original URL | Publisher | Date | Chunks (planned, one per hero/item group) | Questions it should answer |
 |---|---|---|---|---|---|---|
-| S01 | [GAME] patch [X.Y] | [URL] | [Developer] | [date] | [see note] | [Q#] |
-| S02 | | | | | | |
-| S03 | | | | | | |
-| S04 | | | | | | |
-| S05 | | | | | | |
+| S01 | Minor Update - 08-12-2026 | https://store.steampowered.com/news/app/1422450/view/1840944183775204 | Valve | 2026-08-12 | 13 (Apollo, Billy, Doorman, Drifter, Holliday, Ivy, Lash, McGinnis, Paige, Seven, Vindicta, Vyper, Wraith) | — (distractor for Q2–Q4) |
+| S02 | Minor Update - 08-22-2026 | https://store.steampowered.com/news/app/1422450/view/1841579228672283 | Valve | 2026-08-22 | 2 (items, Celeste) | Q2 |
+| S03 | Minor Update - 10-05-2026 | https://store.steampowered.com/news/app/1422450/view/1845383656394833 | Valve | 2026-10-05 | 3 (general, Rat King, Sinclair) | Q1 |
+| S04 | Minor Update - 10-14-2026 | https://store.steampowered.com/news/app/1422450/view/1846651706676198 | Valve | 2026-10-15 | 4 (items, Baba, Street Brawl, Deadman Danny) | Q3, Q4 |
+| S05 | Minor Update - 11-04-2026 | https://store.steampowered.com/news/app/1422450/view/1848664643339845 | Valve | 2026-11-05 | 8 (Healbane, Apollo, Baba, Celeste, Deadman Danny, Mo & Krill, Nurse Harrow, Rat King) | Q2, Q3, Q4 |
 
-**Permission note:** publicly readable doesn't automatically mean reusable. My plan: store text only for this non-commercial class demo, show short excerpts, always link to the official page, and **confirm with the instructor** that this is acceptable. If not, switch to Option 2. *Status: [not yet asked / asked on DATE / approved].*
+**Permission note:** these are publicly posted by Valve, but publicly readable doesn't automatically mean reusable. My plan: store the text only inside my class demo, show short excerpts in answers, always link back to the official Steam page, and **confirm with the instructor** that this is acceptable. If not, I'll switch to clearly labeled synthetic patch notes. *Status: not yet asked.*
 
-**Stable ID rule:** `S0#` per patch note; chunk IDs `S0#-C##`. Re-importing the same version must not create new rows. A new version gets a new source ID; an edited version replaces its old chunks.
+**Stable ID rule:** `S0#` per patch note; chunk IDs `S0#-C##` in the order heroes appear. Re-importing the same patch must not create new rows. A new patch gets a new source ID; an edited patch replaces its old chunks.
 
 ---
 
@@ -380,28 +383,28 @@ official patch note (S01–S05)
 
 | Step | Example |
 |---|---|
-| Source | `S02`, [GAME] patch [X.Y], [URL], [date] |
-| Chunk | `S02-C04`, section "[Characters > CHARACTER]", text: "[one real bullet, e.g. damage reduced from A to B]" |
-| Metadata | source_id=S02, version=[X.Y], date=[date], section=[...], entities=[CHARACTER] |
-| Embedding | model=[name/version], dimensions=[n] (record the actual values at Build) |
-| Question | "Did they make [CHARACTER] weaker?" |
-| Expected retrieval | `S02-C04` in the top 3 |
-| Expected answer | "[CHARACTER]'s [stat] went from A to B in patch [X.Y] [S02, section]." |
-| How it could fail | Keyword search misses it ("weaker" isn't in the text). Vector search could return a different character's nerf. Without a version filter it could cite an older patch. |
+| Source | `S02`, Deadlock Minor Update - 08-22-2026, Steam News, 2026-08-22 |
+| Chunk | `S02-C02` (Celeste), includes the line: "Celeste: Shining Wonder damage reduced from 165 to 140" |
+| Metadata | source_id=S02, patch=08-22-2026, date=2026-08-22, hero=Celeste, abilities=[Dazzling Trick, Radiant Daggers, Shining Wonder] |
+| Embedding | model and dimensions recorded at Build |
+| Question | Q2: "Did they make Celeste's Shining Wonder weaker?" |
+| Expected retrieval | `S02-C02` and `S05-C04` (Celeste in the 11-04 patch) both in the top 4 |
+| Expected answer | Yes. On Aug 22 its damage dropped from 165 to 140 and spirit scaling from 0.9 to 0.6 (its T2 upgrade now adds +0.45 scaling back) [S02-C02]. On Nov 4 its cooldown went from 160s to 170s and its slow from -32% to -28% [S05-C04]. |
+| How it could fail | Keyword search misses it ("weaker" isn't in the text). Vector search could return only the Dazzling Trick lines, or another hero's nerf. A top-k that's too small could miss the November patch. The model could leave out the T2 compensation. |
 
 ---
 
 ### G. Evaluation questions
 
-*Write down the expected source **before** running anything.*
+*Expected sources written down **before** running anything.*
 
 | # | Type | Question | Expected source(s) | What would show a problem |
 |---|---|---|---|---|
-| Q1 | Exact term | "What changed for [CHARACTER] in [VERSION]?" | [S0#-C##] | Wrong version cited |
-| Q2 | Paraphrase | "Did they nerf [WEAPON/ITEM]?" (notes say "damage reduced") | [S0#-C##] | Keyword baseline misses it; check vector |
-| Q3 | Relationship | "Which patches since [VERSION] changed [CHARACTER]?" | [S0#, S0#] | Misses a patch, so metadata/graph needs work |
-| Q4 | Useful | "What's new in [MODE] since [VERSION]?" | [S0#-C##] | Irrelevant chunks returned |
-| Q5 | **Unanswerable** | "When is the next patch coming out?" | **None** | App guesses a date instead of saying it has no evidence |
+| Q1 | Exact term | "What changed for Sinclair in the 10-05-2026 update?" | `S03-C03` | Cites a different patch, or misses lines like Vexing Bolt now doing half damage to objectives |
+| Q2 | Paraphrase | "Did they make Celeste's Shining Wonder weaker?" (notes say "reduced", never "weaker") | `S02-C02`, `S05-C04` | Keyword baseline misses it; vector misses one of the two patches |
+| Q3 | Relationship (across patches) | "How has Baba's Brew changed across patches?" | `S04-C02`, `S05-C03` | Gets the cooldown order wrong (it went 25s → 27s → 28s) or misses one patch |
+| Q4 | Useful (time filter) | "I stopped playing in early October. What changed for Deadman Danny since then?" | `S04-C04`, `S05-C05` | Only reports the October buffs and misses the partial November nerfs, or pulls in older patches |
+| Q5 | **Unanswerable** | "When is the next Deadlock patch coming out?" | **None** | App guesses a date instead of saying the patch notes don't cover it |
 
 ---
 
@@ -409,31 +412,34 @@ official patch note (S01–S05)
 
 | # | Story | Check | Status |
 |---|---|---|---|
-| 1 | As a returning player, I can see which patch note an answer came from and open it. | Every answer shows source + section links that open the right page. | planned |
+| 1 | As a returning player, I can see which patch note an answer came from and open it. | Every answer shows chunk IDs + a link that opens the right Steam patch note. | planned |
 | 2 | As a returning player, I get an honest "I don't know" when the notes don't cover my question. | Q5 returns an insufficient-evidence message with no invented date. | planned |
-| 3 | As the admin, I can re-import a patch note without creating duplicates. | Import S01 twice; chunk count is unchanged. | planned |
+| 3 | As the admin, I can re-import a patch note without creating duplicates. | Import S01 twice; chunk count stays at 13. | planned |
 | 4 | As a visitor or member, I can't use the import controls. | Anonymous → 401/login, member → 403 on the import route (reuses APP-003 role checks). | planned |
-| 5 | As the owner, my data survives a restart. | Restart the container and ask Q1 again; same chunks returned. | planned |
+| 5 | As the owner, my data survives a restart. | Restart the container and ask Q1 again; `S03-C03` still comes back. | planned |
 
 ---
 
 ### I. Hosting, cost and limits
 
-- **Where (planned):** `https://[savepoint or rag].acw33firstliveproj.online`, deployed the same way as the calculator (Caddy route + my CI/CD pipeline, QA first, then production).
+- **Where (planned):** `https://savepoint.acw33firstliveproj.online`, deployed the same way as the calculator (Caddy route + my CI/CD pipeline, QA first, then production).
 - **Note:** my server uses **Caddy**, not Traefik. Follow my Server Studio setup.
 - **Storage:** SQLite file on a persistent Docker volume.
 - **Secrets:** API keys only in server environment variables / GitHub Actions secrets, never in the repo or the browser.
-- **Public-use limits:** require login to chat (reuses accounts), [N] questions per user per day, max question length, top-k = [3–5] chunks to keep tokens down.
-- **Cost estimate:** [questions/day] × ([question tokens] + [k × chunk tokens] + [answer tokens]) × [price per token] = [$/month]. Set a spending cap with the provider.
-- **Droplet limits:** [RAM/CPU]; if running a local embedding model, check memory first.
-- **Unknowns to settle before Build:** which provider, whether sqlite-vec loads in my Docker image, the instructor's answer on patch-note permission.
+- **Public-use limits (planned):** login required to chat (reuses Save Point accounts), 20 questions per user per day, 300-character max question, top-4 chunks per answer.
+- **Cost estimate (rough, to confirm with real prices):** about 850 tokens per question (≈30 question + ≈600 for 4 chunks + ≈200 answer). At 50 questions/day ≈ 1.3M tokens/month, priced once I pick a provider (T9). Set a spending cap with the provider.
+- **Droplet limits:** check RAM/CPU before choosing a local embedding model.
+- **Unknowns to settle before Build:** which providers, whether sqlite-vec loads in my Docker image, the instructor's answer on patch-note permission.
 
 ---
 
 ### J. Changed / checked / next
 
-- **Changed:** chose Save Point + [GAME] patch notes as my RAG topic; chose vector-first in SQLite with an FTS5 baseline (provisional).
-- **Checked (actually done):** [e.g. "read T1, T3, T4 on DATE"; "peer NAME traced S02 through section F and asked ___"]. *Only list things you really did.*
-- **Next:** confirm permission → pick embedding + generation provider → test that sqlite-vec loads locally → build the import for S01 → first real retrieval trace.
+- **Changed:** chose Deadlock patch notes for Save Point's RAG feature; collected 5 official patch notes (S01–S05) with source IDs; wrote 5 evaluation questions with expected chunks; chose vector-first in SQLite with an FTS5 baseline (provisional).
+- **Checked (actually done):** pulled the 5 patch notes from Steam's official news feed on Nov 16, 2026 and confirmed each has a working Steam URL, date and the hero lines used in Q1–Q4 (observed locally).
+- **Next:** ask the instructor about permission → read T1–T9 → pick embedding + generation providers → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
 
-**Peer walkthrough (required by the rubric):** a real classmate follows one source through section F without my explanation. Record their question, my decision and any change here: [ ].
+**Peer walkthrough:** a real classmate follows S02 through section F without my explanation, then we discuss where Q2 could go wrong.
+- Peer: [name] · Date: [ ]
+- Their question / concern: [ ]
+- My decision / what I changed: [ ]
