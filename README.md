@@ -435,9 +435,9 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 
 ### J. Changed / checked / next
 
-- **Changed:** chose Deadlock patch notes for Save Point's RAG feature; collected 5 official patch notes (S01–S05) with source IDs; wrote 5 evaluation questions with expected chunks; chose vector-first in SQLite with an FTS5 baseline (provisional).
-- **Checked (actually done):** pulled the 5 patch notes from Steam's official news feed on Nov 16, 2026 and confirmed each has a working Steam URL, date and the hero lines used in Q1–Q4 (observed locally).
-- **Next:** follow up on patch-note permission after the class review → read T1–T9 → pick the embedding model (generation: Groq gpt-oss-20b, chosen) → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
+- **Changed:** chose Deadlock patch notes for Save Point's RAG feature; collected 5 official patch notes (S01–S05) with source IDs; wrote 5 evaluation questions with expected chunks; chose vector-first in SQLite with an FTS5 baseline (provisional); wrote reading notes for T1–T4 and T7–T9; chose Groq gpt-oss-20b for generation; added an idea for inferred buff/nerf labels.
+- **Checked (actually done):** pulled the 5 patch notes from Steam's official news feed on Nov 16, 2026 and confirmed each has a working Steam URL, date and the hero lines used in Q1–Q4 (observed locally). On Nov 17 I read T1–T4 and T7–T9 and wrote what I learned from each; T5, T6 and T10 are marked to read before Build.
+- **Next:** follow up on patch-note permission after the class review → read T5, T6 and T10 → pick the embedding model (generation: Groq gpt-oss-20b, chosen) → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
 
 **Peer walkthrough:** a real classmate follows S02 through section F without my explanation, then we discuss where Q2 could go wrong.
 - Peer: [name] · Date: [ ]
