@@ -300,7 +300,7 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 | T7 | Course chunking handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/chunking.md | Chunking experiment design | Nov 17, 2026 | My first idea was to split each patch into buffs, nerfs and balance changes, but that would spread one hero's changes across different chunks. I'm keeping one chunk per hero per patch and putting buff/nerf in the metadata instead. |
 | T8 | Course embeddings handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/embeddings.md | What embeddings are and aren't | Nov 17, 2026 | I thought embeddings would connect buffs and nerfs to the characters they change. Each chunk is actually its own vector, and similar meanings just land close together. Links like hero → patch → ability are a graph idea, not a vector one. |
 | T9 | Course AI cost comparison: https://github.com/kaw393939/is373-rag/blob/main/docs/students/ai-costs.md | Choosing an embedding + generation provider | [date] | [ ] |
-| T10 | Docs for the embedding/generation provider I pick | Model names, limits, pricing | to choose before Build | — |
+| T10 | Groq docs (generation provider I picked): https://console.groq.com/docs/models | Model names, rate limits, pricing for openai/gpt-oss-20b | not yet | To read before Build |
 
 **AI help:** Claude (an AI assistant) drafted this plan's structure, suggested using Save Point with patch notes, and pulled the five official Deadlock patch notes from Steam's news feed. I chose Deadlock, I'm reading the technical sources myself, and I made the architecture choice below. AI-written explanations are checked against T1–T9 before I rely on them.
 
@@ -350,12 +350,12 @@ official patch note (S01–S05)
 
 **Chunking experiment (planned):** compare **(a) one chunk per hero per patch** (Deadlock notes start each line with the hero or item name, so this is a natural boundary) with **(b) fixed 500-character chunks with 100 characters of overlap**. Record whether (b) splits one hero's changes across chunks or mixes two heroes, and the effect on Q1–Q4.
 
-**Models (to choose before Build):**
+**Models (generation chosen Nov 17; embeddings still to choose before Build):**
 
 | Role | Option A | Option B | Decision |
 |---|---|---|---|
 | Embeddings | Hosted embedding API | Small local embedding model on the droplet (watch RAM) | before Build, after reading T8 + T9 |
-| Generation | A provider's free tier | A paid provider with a spending cap | before Build, after reading T9 |
+| Generation | **Groq: openai/gpt-oss-20b** (free tier: 1,000 requests/day) | Claude Haiku 5.5 (paid, cheap) as a backup / comparison | **Chose Groq gpt-oss-20b (Nov 17).** It is the starting point the course cost handout suggests, and the free tier covers a class demo. Not tested yet. |
 
 ---
 
@@ -427,9 +427,9 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 - **Storage:** SQLite file on a persistent Docker volume.
 - **Secrets:** API keys only in server environment variables / GitHub Actions secrets, never in the repo or the browser.
 - **Public-use limits (planned):** login required to chat (reuses Save Point accounts), 20 questions per user per day, 300-character max question, top-4 chunks per answer.
-- **Cost estimate (rough, to confirm with real prices):** about 850 tokens per question (≈30 question + ≈600 for 4 chunks + ≈200 answer). At 50 questions/day ≈ 1.3M tokens/month, priced once I pick a provider (T9). Set a spending cap with the provider.
+- **Cost estimate (rough, to confirm with real prices):** about 850 tokens per question (≈30 question + ≈600 for 4 chunks + ≈200 answer). At 50 questions/day ≈ 1.3M tokens/month, With Groq gpt-oss-20b ($0.075 in / $0.30 out per 1M tokens, from the course handout checked Nov 11) that is about $0.10 per 1,000 questions, and the free tier should cover it. This is a calculation, not a measurement. I'll log real token use per question. Set a spending cap if I ever move to a paid tier.
 - **Droplet limits:** check RAM/CPU before choosing a local embedding model.
-- **Unknowns to settle before Build:** which providers, whether sqlite-vec loads in my Docker image, the instructor's answer on patch-note permission.
+- **Unknowns to settle before Build:** which embedding model (hosted vs. local), whether sqlite-vec loads in my Docker image, the instructor's answer on patch-note permission.
 
 ---
 
@@ -437,7 +437,7 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 
 - **Changed:** chose Deadlock patch notes for Save Point's RAG feature; collected 5 official patch notes (S01–S05) with source IDs; wrote 5 evaluation questions with expected chunks; chose vector-first in SQLite with an FTS5 baseline (provisional).
 - **Checked (actually done):** pulled the 5 patch notes from Steam's official news feed on Nov 16, 2026 and confirmed each has a working Steam URL, date and the hero lines used in Q1–Q4 (observed locally).
-- **Next:** follow up on patch-note permission after the class review → read T1–T9 → pick embedding + generation providers → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
+- **Next:** follow up on patch-note permission after the class review → read T1–T9 → pick the embedding model (generation: Groq gpt-oss-20b, chosen) → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
 
 **Peer walkthrough:** a real classmate follows S02 through section F without my explanation, then we discuss where Q2 could go wrong.
 - Peer: [name] · Date: [ ]
