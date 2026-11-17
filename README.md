@@ -295,8 +295,8 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 | T2 | Lewis et al. (2020), *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*: https://arxiv.org/abs/2005.11401 | Where the term "RAG" comes from | [date] | [ ] |
 | T3 | SQLite FTS5 (full-text search): https://www.sqlite.org/fts5.html | Keyword baseline in the database I already use | [date] | [ ] |
 | T4 | sqlite-vec: https://github.com/asg017/sqlite-vec | Vector search inside SQLite, so no new database server | [date] | [ ] |
-| T5 | Qdrant documentation: https://qdrant.tech/documentation/ | Alternative: dedicated vector database + metadata filtering | [date] | [ ] |
-| T6 | Neo4j documentation: https://neo4j.com/docs/ | Graph database alternative (also supports vector indexes) | [date] | [ ] |
+| T5 | Qdrant documentation: https://qdrant.tech/documentation/ | Alternative: dedicated vector database + metadata filtering | not yet | To read later (before Build) |
+| T6 | Neo4j documentation: https://neo4j.com/docs/ | Graph database alternative (also supports vector indexes) | not yet | To read later (before Build) |
 | T7 | Course chunking handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/chunking.md | Chunking experiment design | Nov 17, 2026 | My first idea was to split each patch into buffs, nerfs and balance changes, but that would spread one hero's changes across different chunks. I'm keeping one chunk per hero per patch and putting buff/nerf in the metadata instead. |
 | T8 | Course embeddings handout: https://github.com/kaw393939/is373-rag/blob/main/docs/students/embeddings.md | What embeddings are and aren't | Nov 17, 2026 | I thought embeddings would connect buffs and nerfs to the characters they change. Each chunk is actually its own vector, and similar meanings just land close together. Links like hero → patch → ability are a graph idea, not a vector one. |
 | T9 | Course AI cost comparison: https://github.com/kaw393939/is373-rag/blob/main/docs/students/ai-costs.md | Choosing an embedding + generation provider | [date] | [ ] |
