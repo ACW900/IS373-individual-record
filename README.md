@@ -2,7 +2,7 @@
 
 **Course:** IS373 Content Management Systems, NJIT, Fall 2026 · **GitHub:** [ACW900](https://github.com/ACW900)
 
-This record holds my two individual deliverables. My group work (Deliverable 3) is in my team's shared record.
+This record holds my two individual deliverables. My group work (Deliverable 3) is in my team's shared record. Each section below is collapsed: **click its title to open it.**
 
 | Section | Contents |
 |---|---|
@@ -13,7 +13,10 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 
 **Stage:** Review 1 (Plan), due Nov 17, 2026. No hosted app is required yet; planned URLs are labeled.
 
----
+<!-- sections -->
+<details>
+<summary><strong>1. Individual portfolio + career research</strong> (click to open)</summary>
+
 ## 1. Individual portfolio + career research
 
 ### Index
@@ -245,7 +248,10 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 
 **AI help:** Claude (an AI assistant) found and summarized the job postings, drafted this section's structure, and made the two layout wireframes from my descriptions. I opened and checked every posting myself, wrote my impressions of each, chose the direction (from options Claude explained), and chose the layout.
 
----
+</details>
+
+<details>
+<summary><strong>2. Individual RAG app + technical research</strong> (click to open)</summary>
 
 ## 2. Individual RAG app + technical research
 
@@ -443,3 +449,5 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 - Peer: [name] · Date: [ ]
 - Their question / concern: [ ]
 - My decision / what I changed: [ ]
+
+</details>
