@@ -257,7 +257,7 @@ This record holds my two individual deliverables. My group work (Deliverable 3) 
 | Technical sources + dates checked | [B](#b-technical-sources) | listed; reading in progress |
 | Vector / graph / keyword comparison | [C](#c-comparing-approaches) | written |
 | Architecture choice | [D](#d-chosen-architecture) | chosen (provisional) |
-| Source manifest | [E](#e-source-manifest) | 5 sources collected; permission not yet confirmed |
+| Source manifest | [E](#e-source-manifest) | 5 sources collected; permission: unsure, expecting it to be covered in class |
 | Sample representation (source → chunk → answer trace) | [F](#f-one-source-traced-through-the-system) | planned (illustrative, not executed) |
 | Evaluation questions | [G](#g-evaluation-questions) | written; expected sources recorded; not run |
 | Stories / checks | [H](#h-observable-stories-and-checks) | planned |
@@ -371,7 +371,7 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 | S04 | Minor Update - 10-14-2026 | https://store.steampowered.com/news/app/1422450/view/1846651706676198 | Valve | 2026-10-15 | 4 (items, Baba, Street Brawl, Deadman Danny) | Q3, Q4 |
 | S05 | Minor Update - 11-04-2026 | https://store.steampowered.com/news/app/1422450/view/1848664643339845 | Valve | 2026-11-05 | 8 (Healbane, Apollo, Baba, Celeste, Deadman Danny, Mo & Krill, Nurse Harrow, Rat King) | Q2, Q3, Q4 |
 
-**Permission note:** these are publicly posted by Valve, but publicly readable doesn't automatically mean reusable. My plan: store the text only inside my class demo, show short excerpts in answers, always link back to the official Steam page, and **confirm with the instructor** that this is acceptable. If not, I'll switch to clearly labeled synthetic patch notes. *Status: not yet asked.*
+**Permission note:** these are publicly posted by Valve, but publicly readable doesn't automatically mean reusable. My plan: store the text only inside my class demo, show short excerpts in answers, always link back to the official Steam page, and **confirm with the instructor** that this is acceptable. If not, I'll switch to clearly labeled synthetic patch notes. *Status (Nov 16): not asked yet. I'm unsure what we're supposed to do for this part. I think the instructor will go over it during the class review, so I'll follow what's said there.*
 
 **Stable ID rule:** `S0#` per patch note; chunk IDs `S0#-C##` in the order heroes appear. Re-importing the same patch must not create new rows. A new patch gets a new source ID; an edited patch replaces its old chunks.
 
@@ -437,7 +437,7 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 
 - **Changed:** chose Deadlock patch notes for Save Point's RAG feature; collected 5 official patch notes (S01–S05) with source IDs; wrote 5 evaluation questions with expected chunks; chose vector-first in SQLite with an FTS5 baseline (provisional).
 - **Checked (actually done):** pulled the 5 patch notes from Steam's official news feed on Nov 16, 2026 and confirmed each has a working Steam URL, date and the hero lines used in Q1–Q4 (observed locally).
-- **Next:** ask the instructor about permission → read T1–T9 → pick embedding + generation providers → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
+- **Next:** follow up on patch-note permission after the class review → read T1–T9 → pick embedding + generation providers → tag the App Studio submission → build RAG-001 (import S01–S05) → first real retrieval trace, for **Build, Nov 24**.
 
 **Peer walkthrough:** a real classmate follows S02 through section F without my explanation, then we discuss where Q2 could go wrong.
 - Peer: [name] · Date: [ ]
