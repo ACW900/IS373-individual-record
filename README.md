@@ -420,7 +420,7 @@ All five are official Valve patch notes, retrieved Nov 16, 2026 from the Steam N
 |---|---|---|---|
 | 1 | As a returning player, I can see which patch note an answer came from and open it. | Every answer shows chunk IDs + a link that opens the right Steam patch note. | planned |
 | 2 | As a returning player, I get an honest "I don't know" when the notes don't cover my question. | Q5 returns an insufficient-evidence message with no invented date. | planned |
-| 3 | As the admin, I can re-import a patch note without creating duplicates. | Import S01 twice; chunk count stays at 13. | planned |
+| 3 | As the admin, I can re-import or fix a patch note without leaving bad data behind. | Import S01 twice: chunk count stays at 13. Re-import an edited copy of S01: the old chunks stop coming back. Import an empty or missing file: a clear error, and nothing is saved. | planned |
 | 4 | As a visitor or member, I can't use the import controls. | Anonymous → 401/login, member → 403 on the import route (reuses APP-003 role checks). | planned |
 | 5 | As the owner, my data survives a restart. | Restart the container and ask Q1 again; `S03-C03` still comes back. | planned |
 
